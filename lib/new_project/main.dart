@@ -4,7 +4,6 @@ import 'package:weather_app/new_project/cubits/get_weather_cubit/get_weather_cub
 import 'package:weather_app/new_project/cubits/get_weather_cubit/get_weather_states.dart';
 import 'package:weather_app/new_project/views/home_view.dart';
 
-
 void main() {
   runApp(const WeatherApp());
 }
@@ -15,58 +14,31 @@ class WeatherApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => GetWeatherCubit(),
-        child: //CustomMaterialApp()
-        Builder(
-          builder: (context) =>
-              BlocBuilder<GetWeatherCubit, WeatherState>(
-                builder: (context, state) {
-                  return MaterialApp(
-                    theme: ThemeData(
-                      //primarySwatch: Colors.amber,
-                      //colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
-                      colorScheme: ColorScheme.fromSeed(
-                          seedColor: getThemeColor(
-                            BlocProvider
-                                .of<GetWeatherCubit>(context)
-                                .weatherModel
-                                ?.weatherCondition,
-                          )),
-                    ),
-                    debugShowCheckedModeBanner: false,
-                    home: const HomeView(),
-                  );
-                },
+      create: (context) => GetWeatherCubit(),
+      child: //CustomMaterialApp()
+          Builder(
+        builder: (context) => BlocBuilder<GetWeatherCubit, WeatherState>(
+          builder: (context, state) {
+            return MaterialApp(
+              theme: ThemeData(
+                colorScheme: ColorScheme.fromSeed(
+                  seedColor: getThemeColor(
+                    BlocProvider.of<GetWeatherCubit>(context)
+                        .weatherModel
+                        ?.weatherCondition,
+                  ),
+                ),
               ),
-        ) // ,
+              debugShowCheckedModeBanner: false,
+              home: const HomeView(),
+            );
+          },
+        ),
+      ), // ,
     );
   }
-
-
 }
 
-/*class CustomMaterialApp extends StatelessWidget {
-  const CustomMaterialApp({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        //primarySwatch: Colors.amber,
-        //colorScheme: ColorScheme.fromSeed(seedColor: Colors.amber),
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: getThemeColor(
-          BlocProvider.of<GetWeatherCubit>(context)
-              .weatherModel?.weatherCondition,
-        )),
-      ),
-      debugShowCheckedModeBanner: false,
-      home: HomeView(),
-    );
-  }
-}*/
 MaterialColor getThemeColor(String? condition) {
   if (condition == null) {
     return Colors.blue;
