@@ -7,14 +7,9 @@ import 'package:weather_app/new_project/views/search_view.dart';
 import '../widgets/no_weather_body.dart';
 import '../widgets/weather_info_body.dart';
 
-class HomeView extends StatefulWidget {
+class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
-  @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +36,10 @@ class _HomeViewState extends State<HomeView> {
         builder: (context, state) {
           if (state is WeatherInitialState) {
             return const NoWeatherBody();
+          } else if (state is WeatherLoadingState) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           } else if (state is WeatherLoadedState) {
             return WeatherInfoBody(
               weatherModel: state.weatherModel,
